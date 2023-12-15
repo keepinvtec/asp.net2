@@ -1,0 +1,41 @@
+﻿@model InvoiceModel
+
+<script type="text/javascript">
+    function NewVINcode(temp) {
+        var other = document.getElementById('opt');
+        if (temp) {
+            other.innerHTML = temp;
+            document.getElementById('selector').style.display = 'none';
+            document.querySelectorAll('[id=attrib]').forEach(el => el.style.display = 'block');
+        }
+        else {
+            other.innerHTML = 'Other';
+            document.getElementById('selector').style.display = 'block';
+            document.getElementById('selector').value = 'Other';
+            document.querySelectorAll('[id=attrib]').forEach(el => el.style.display = 'none');
+        }
+    }
+</script>
+
+<style>
+    #attrib { display: none; }
+</style>
+
+<h2>Create invoice</h2>
+<form asp-action="create">
+    <p>
+        <input type="text" placeholder="Type VIN or select below" onchange="NewVINcode(this.value)">
+    </p>
+    <p>
+        <select name="invoice.CarVINcode" asp-items="Model.Cars" id="selector"><option id="opt">Other</option></select>
+    </p>
+    <p>
+        <input asp-for="invoice.Car.Brand" type="text" id="attrib" placeholder="Brand">
+    </p>
+    <p>
+        <input asp-for="invoice.Car.YearOfProd" type="text" id="attrib" placeholder="YearOfProd">
+    </p>
+    <p>
+        <input type="submit" value="Add to database">
+    </p>
+</form>

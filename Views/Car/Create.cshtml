@@ -1,0 +1,23 @@
+﻿@model Car
+
+<h2>Add car</h2>
+<form asp-action="create">
+    <p>
+        <input asp-for="VINcode" type="text" id="attrib" placeholder="VINcode">
+    </p>
+    <p>
+        <input asp-for="Brand" type="text" id="attrib" placeholder="Brand">
+    </p>
+    <p>
+        <input asp-for="Model" type="text" id="attrib" placeholder="Model">
+    </p>
+    <p>
+        <input asp-for="YearOfProd" type="number" id="attrib" placeholder="YearOfProd">
+    </p>
+    <p>
+        <input asp-for="Mileage" type="number" id="attrib" placeholder="Mileage">
+    </p>
+    <p>
+        <input type="submit" value="Add to database">
+    </p>
+</form>

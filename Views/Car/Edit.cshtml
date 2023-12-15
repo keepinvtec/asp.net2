@@ -1,0 +1,23 @@
+﻿@model Car
+
+<h2>Edit car</h2>
+<form asp-action="edit" asp-route-id="@Model.VINcode">
+    <p>
+        <input asp-for="VINcode" type="text" readonly>
+    </p>
+    <p>
+        <input asp-for="Brand" type="text">
+    </p>
+    <p>
+        <input asp-for="Model" type="text">
+    </p>
+    <p>
+        <input asp-for="YearOfProd" type="number">
+    </p>
+    <p>
+        <input asp-for="Mileage" type="number">
+    </p>
+    <p>
+        <input type="submit" value="Save changes">
+    </p>
+</form>

@@ -1,0 +1,54 @@
+﻿@model CarModel
+
+<style>
+    table th, table td { padding: 8px; }
+    button {
+        background: none;
+        border: none;
+        outline: none;
+        text-decoration: underline;
+        color: dodgerblue;
+        cursor: pointer;
+        margin-left: 20px;
+    }
+    button:hover {
+        color: midnightblue;
+    }
+</style>
+
+<h1>Car list</h1>
+
+<p>
+    <a asp-controller="Home" asp-action="Index">Open invoice list</a> <wbr>
+    <a asp-controller="Car" asp-action="Create">Add car</a>
+</p>
+
+<p>
+    <table>
+        <tr>
+            <td><u>VINcode</u></td>
+            <td><u>Brand</u></td>
+            <td><u>Model</u></td>
+            <td><u>YearOfProd</u></td>
+            <td><u>Mileage</u></td>
+        </tr>
+        @foreach (Car u in Model.CarsEntity)
+        {
+            <tr>
+                <td>@u.VINcode</td>
+                <td>@u.Brand</td>
+                <td>@u.Model</td>
+                <td>@u.YearOfProd</td>
+                <td>@u.Mileage</td>
+                <td>
+                    <a asp-controller="Car" asp-action="Edit" asp-route-vincode="@u.VINcode">
+                        <button>Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <form asp-controller="Car" asp-action="Delete" asp-route-vincode="@u.VINcode"><button type="submit">Delete</button></form>
+                </td>
+            </tr>
+        }
+    </table>
+</p>

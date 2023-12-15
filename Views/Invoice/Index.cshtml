@@ -1,0 +1,96 @@
+﻿@model IndexViewModel
+
+<style>
+    .glyphicon { display: inline-block; padding:0 5px; }
+    .glyphicon-chevron-right:after { content: "\00BB"; }
+    .glyphicon-chevron-left:before { content: "\00AB"; }
+    table th, table td { padding: 8px; }
+    button {
+        background: none;
+        border: none;
+        outline: none;
+        text-decoration: underline;
+        color: dodgerblue;
+        cursor: pointer;
+        margin-left: 20px;
+    }
+    button:hover {
+        color: midnightblue;
+    }
+</style>
+
+<h1>Invoice list</h1>
+
+<p>
+    <a asp-controller="Car" asp-action="Index">Open car list</a> <wbr>
+    <a asp-controller="Invoice" asp-action="Create">Create invoice</a>
+</p>
+
+
+<form method="get">
+    <label>Invoice: </label>
+    <input name="invoice" value="@Model.FilterViewModel.SelectedInvoice">
+          
+    <label>Car brand: </label>
+    <select name="brand" asp-items="Model.FilterViewModel.Cars.DistinctBy(x => x.Value).ToList()"></select>
+  
+    <input type="submit" value="Filter">
+</form>
+<p>
+    <table>
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@Model.SortViewModel.InvoiceSort"
+                   asp-route-invoice="@Model.FilterViewModel.SelectedInvoice"
+                   asp-route-brand="@Model.FilterViewModel.SelectedBrand">Invoice</a>
+            </th>
+            <td><u>VINcode</u></td>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@Model.SortViewModel.BrandSort"
+                   asp-route-invoice="@Model.FilterViewModel.SelectedInvoice"
+                   asp-route-brand="@Model.FilterViewModel.SelectedBrand">Brand</a>
+            </th>
+        </tr>
+        @foreach (Invoice u in Model.Invoices)
+        {
+            <tr>
+                <td>@u.InvoiceId</td>
+                <td><a asp-controller="Car" asp-action="Edit" asp-route-vincode="@u.CarVINcode">@u.CarVINcode</a></td>
+                <td>@u.Car?.Brand</td>
+                <td>
+                    <a asp-controller="Invoice" asp-action="Edit" asp-route-id="@u.InvoiceId">
+                        <button>Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <form asp-controller="Invoice" asp-action="Delete" asp-route-id="@u.InvoiceId"><button type="submit">Delete</button></form>
+                </td>
+            </tr>
+        }
+    </table>
+</p>
+<div>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       asp-route-invoice="@Model.FilterViewModel.SelectedInvoice"
+       asp-route-brand="@Model.FilterViewModel.SelectedBrand"
+       asp-route-sortorder="@Model.SortViewModel.Current"
+       class="glyphicon glyphicon-chevron-left">
+        Previous
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       asp-route-invoice="@Model.FilterViewModel.SelectedInvoice"
+       asp-route-brand="@Model.FilterViewModel.SelectedBrand"
+       asp-route-sortorder="@Model.SortViewModel.Current"
+       class="glyphicon glyphicon-chevron-right">
+        Next
+    </a>
+}
+</div>
